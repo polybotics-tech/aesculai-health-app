@@ -1,12 +1,13 @@
 {
   "expo": {
-    "name": "aesulai-clone",
-    "slug": "aesulai-clone",
+    "name": "Aesculai Health App",
+    "slug": "aesculai-health-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "aesulaiclone",
+    "scheme": "com.aesculai",
     "userInterfaceStyle": "automatic",
+    "backgroundColor": "#fafeff",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
@@ -14,7 +15,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#fafeff"
       },
       "edgeToEdgeEnabled": true
     },
@@ -25,15 +26,24 @@
     },
     "plugins": [
       "expo-router",
+      "@react-native-google-signin/google-signin",
       [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#fafeff"
         }
-      ]
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app wants to access your photos to allow upload for analysis",
+          "cameraPermission": "The app wants to access your camera to allow upload profile photo"
+        }
+      ],
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true
