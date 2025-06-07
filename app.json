@@ -17,7 +17,11 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#fafeff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.aesculai.healthapp"
     },
     "web": {
       "bundler": "metro",
@@ -47,6 +51,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "7f6867cf-ad9e-4bc8-8f5c-52d66ba82b92"
+      }
     }
   }
 }
