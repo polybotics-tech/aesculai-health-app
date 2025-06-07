@@ -66,8 +66,7 @@
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@types/react": "~19.0.10"
+    "@babel/core": "^7.25.2"
   },
   "private": true
 }
