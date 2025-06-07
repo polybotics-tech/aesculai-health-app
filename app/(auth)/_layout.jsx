@@ -1,4 +1,4 @@
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
+//import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { router, Slot, usePathname } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -172,8 +172,8 @@ export default function AuthLayout() {
               <Text style={styles.seperatorText}>OR</Text>
             </View>
 
-            {/**google */}
-            <SignInWithGoogle />
+            {/**google 
+            <SignInWithGoogle />*/}
           </>
         )}
       </ScrollViewWrapper>

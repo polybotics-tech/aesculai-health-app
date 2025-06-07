@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Aesculai Health App",
+    "name": "Aesculai Health",
     "slug": "aesculai-health-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,11 +21,6 @@
             "CFBundleURLSchemes": [
               "com.googleusercontent.apps.1098437746889-2bdl76f5na8dqh5epvmbnkfi3aettc91"
             ]
-          },
-          {
-            "CFBundleURLSchemes": [
-              "com.googleusercontent.apps.1098437746889-2bdl76f5na8dqh5epvmbnkfi3aettc91"
-            ]
           }
         ]
       }
@@ -36,10 +31,7 @@
         "backgroundColor": "#fafeff"
       },
       "edgeToEdgeEnabled": true,
-      "permissions": [
-        "android.permission.RECORD_AUDIO",
-        "android.permission.RECORD_AUDIO"
-      ],
+      "permissions": ["android.permission.RECORD_AUDIO"],
       "package": "com.aesculai.healthapp"
     },
     "web": {
@@ -49,7 +41,12 @@
     },
     "plugins": [
       "expo-router",
-      "@react-native-google-signin/google-signin",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.1098437746889-2bdl76f5na8dqh5epvmbnkfi3aettc91"
+        }
+      ],
       [
         "expo-splash-screen",
         {
