@@ -21,6 +21,11 @@
             "CFBundleURLSchemes": [
               "com.googleusercontent.apps.1098437746889-2bdl76f5na8dqh5epvmbnkfi3aettc91"
             ]
+          },
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.1098437746889-2bdl76f5na8dqh5epvmbnkfi3aettc91"
+            ]
           }
         ]
       }
@@ -31,7 +36,10 @@
         "backgroundColor": "#fafeff"
       },
       "edgeToEdgeEnabled": true,
-      "permissions": ["android.permission.RECORD_AUDIO"],
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.RECORD_AUDIO"
+      ],
       "package": "com.aesculai.healthapp"
     },
     "web": {
@@ -68,6 +76,12 @@
       "eas": {
         "projectId": "7f6867cf-ad9e-4bc8-8f5c-52d66ba82b92"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/7f6867cf-ad9e-4bc8-8f5c-52d66ba82b92"
     }
   }
 }
