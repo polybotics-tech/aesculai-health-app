@@ -212,7 +212,7 @@ const SignInWithGoogle = ({}) => {
       webClientId:
         "1098437746889-odhgbcs267tdkmekfush312eti0piqer.apps.googleusercontent.com",
       iosClientId:
-        "385057153859-vuav0b4a4tp84vg7vsredf9vkd281ntj.apps.googleusercontent.com",
+        "1098437746889-2bdl76f5na8dqh5epvmbnkfi3aettc91.apps.googleusercontent.com",
       offlineAccess: true,
       forceCodeForRefreshToken: true,
       profileImageSize: 1280,

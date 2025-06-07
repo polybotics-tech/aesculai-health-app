@@ -10,7 +10,20 @@
     "backgroundColor": "#fafeff",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aesculai.healthapp",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Aesculai would like to get access to your camera to take photos for your profile or posts",
+        "NSPhotoLibraryAddUsageDescription": "Aesculai would like to access images to your device for upload",
+        "NSPhotoLibraryUsageDescription": "Aesculai would like to access images to your device for upload",
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.1098437746889-2bdl76f5na8dqh5epvmbnkfi3aettc91"
+            ]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -18,9 +31,7 @@
         "backgroundColor": "#fafeff"
       },
       "edgeToEdgeEnabled": true,
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
+      "permissions": ["android.permission.RECORD_AUDIO"],
       "package": "com.aesculai.healthapp"
     },
     "web": {
