@@ -93,7 +93,7 @@ eas build --profile development
 ⚠️ Don’t forget to push your secrets before building:
 
 ```bash
-eas secret:push --path .env
+eas env:push --path .env
 ```
 
 ---
