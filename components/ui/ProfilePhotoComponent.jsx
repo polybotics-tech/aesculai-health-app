@@ -8,19 +8,14 @@ import {
   View,
 } from "react-native";
 import { useSelector } from "react-redux";
-import {
-  useColor,
-  useConstant,
-  useDebounce,
-  useImageLoader,
-} from "../../hooks";
+import { useColor, useConstant, useDebounce } from "../../hooks";
 import Helper__supabase from "../../hooks/helpers/supabase.api";
 import { ImageView } from "../reuseables";
+import ImageLibrary from "../../lib/image";
 
 const ProfilePhotoComponent = () => {
   const color = useColor();
   const constant = useConstant();
-  const imageLoader = useImageLoader();
 
   const styles = StyleSheet.create({
     component: {
@@ -97,7 +92,10 @@ const ProfilePhotoComponent = () => {
     <View style={styles.component}>
       {/**preview */}
       <View style={styles.preview}>
-        <ImageView uri={imageLoader.thumbnail(user?.avatar_url)} blur="" />
+        <ImageView
+          uri={ImageLibrary.load_thumbnail(user?.avatar_url)}
+          blur=""
+        />
       </View>
 
       {/**edit button */}
