@@ -134,7 +134,13 @@ const RecommendArticles = ({}) => {
   const color = useColor();
   const constant = useConstant();
 
-  const styles = StyleSheet.create({});
+  const styles = StyleSheet.create({
+    link: {
+      fontWeight: constant.font.weight.semibold,
+      color: color.primary,
+      textAlign: "center",
+    },
+  });
 
   const [recommended, setRecommended] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -165,7 +171,15 @@ const RecommendArticles = ({}) => {
       ) : (
         <NotFoundComponent
           isLoading={isLoading}
-          text={errMsg || "No articles found"}
+          text={
+            <Text>
+              {errMsg || "No articles found"}
+              {`\n`}
+              <Text style={styles.link} onPress={_fetchRecommendedArticles}>
+                Try again
+              </Text>
+            </Text>
+          }
         />
       )}
     </>

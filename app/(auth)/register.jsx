@@ -1,11 +1,17 @@
 import { Octicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { PrimaryButton } from "../../components/reuseables";
+import {
+  PolicyTextFormatComponent,
+  PrimaryButton,
+} from "../../components/reuseables";
 import { FormComponent } from "../../components/ui";
 import { PopupModalWrapper } from "../../components/wrappers";
 import { useColor, useConstant, useDebounce } from "../../hooks";
 import Helper__supabase from "../../hooks/helpers/supabase.api";
+import { router } from "expo-router";
+import HealthLibrary from "../../lib/health";
+import StringLibrary from "../../lib/string";
 
 export default function AuthRegister() {
   const color = useColor();
@@ -30,7 +36,13 @@ export default function AuthRegister() {
   const [isLoading, setIsLoading] = useState(false);
 
   const _registerNewUser = useDebounce(async () => {
-    await Helper__supabase.registerUser(setIsLoading, form);
+    const res = await Helper__supabase.registerUser(setIsLoading, form);
+
+    if (res) {
+      setTimeout(() => {
+        router.dismissTo("/(tabs)/");
+      }, 2000);
+    }
   });
 
   return (
@@ -111,6 +123,10 @@ const PrivacyPolicy = ({ value = false, setValue = () => {} }) => {
   //--
   const [isVisible, setIsVisible] = useState(false);
 
+  const privacyPolicy = HealthLibrary.weird_policy_text;
+
+  const formattedLines = StringLibrary.format_app_privacy_policy(privacyPolicy);
+
   return (
     <>
       <FormComponent
@@ -138,7 +154,9 @@ const PrivacyPolicy = ({ value = false, setValue = () => {} }) => {
         title={"Privacy Policy"}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
-      ></PopupModalWrapper>
+      >
+        <PolicyTextFormatComponent formattedLines={formattedLines} />
+      </PopupModalWrapper>
     </>
   );
 };

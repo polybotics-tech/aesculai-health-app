@@ -180,13 +180,16 @@ export default function AuthLayout() {
               </Text>
             </Text>
 
-            {/**seperator */}
+            {/** remove comment to make google sign in visible
+             
+            {/**seperator /}
             <View style={styles.seperator}>
               <Text style={styles.seperatorText}>OR</Text>
             </View>
 
-            {/**google */}
+            {/**google /}
             <SignInWithGoogle />
+            */}
           </>
         )}
       </ScrollViewWrapper>
@@ -194,6 +197,9 @@ export default function AuthLayout() {
   );
 }
 
+{
+  /**not visible to user, but can be added back later */
+}
 const SignInWithGoogle = ({}) => {
   const alert = useAlert();
 

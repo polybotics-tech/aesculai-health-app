@@ -28,7 +28,7 @@ const ArticleCard = ({ data }) => {
       color: color.black,
     },
     title: {
-      fontSize: constant.font.size.b,
+      fontSize: constant.font.size.m,
       fontWeight: constant.font.weight.semibold,
       color: color.primary,
     },
@@ -61,7 +61,9 @@ const ArticleCard = ({ data }) => {
       <View style={styles.split}>
         <View style={styles.sect}>
           <Text style={styles.textBold}>Source</Text>
-          <Text style={styles.text}>{source}</Text>
+          <Text style={styles.text} numberOfLines={1}>
+            {source}
+          </Text>
         </View>
 
         <View style={styles.sect}>
@@ -72,18 +74,27 @@ const ArticleCard = ({ data }) => {
         </View>
       </View>
 
-      <Text style={styles.title}>{journal}</Text>
+      <Text style={styles.title} numberOfLines={2}>
+        {summary}
+      </Text>
 
       <>
         <View>
           <Text style={styles.textBold}>Author(s)</Text>
-          <Text style={styles.text}>{authors}</Text>
+          <Text style={styles.text} numberOfLines={1}>
+            {authors}
+          </Text>
         </View>
 
+        {/**remove comments if you wish to show this section again */}
+        {/*
         <View>
           <Text style={styles.textBold}>Descriptive Summary</Text>
-          <Text style={styles.text}>{summary}</Text>
+          <Text style={styles.text} numberOfLines={2}>
+            {summary}
+          </Text>
         </View>
+        */}
       </>
 
       {/**button */}

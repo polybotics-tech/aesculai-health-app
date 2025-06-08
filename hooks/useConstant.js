@@ -1,7 +1,23 @@
-import { Dimensions, Platform } from "react-native";
+import { Dimensions, PixelRatio, Platform } from "react-native";
 
 const ScrW = Dimensions.get("window").width;
 const ScrH = Dimensions.get("window").height;
+
+const scaleSizeToDevicePixel = (size) => {
+  const baseFontScale = 1; //--base design scale (default system scale)
+  const leastFontScale = 0.8; //--least design scale (smallest recommended system scale)
+
+  const currentScale = PixelRatio.getFontScale();
+  const ratio = Number(baseFontScale / currentScale);
+
+  const adjustedSize = Boolean(ratio > 1.1)
+    ? size * baseFontScale
+    : Boolean(ratio < 0.7)
+    ? size * leastFontScale
+    : size * ratio;
+
+  return adjustedSize;
+};
 
 const useConstant = () => ({
   dimension: {
@@ -22,17 +38,17 @@ const useConstant = () => ({
     },
   },
   size: {
-    xxs: 2,
-    xs: 4,
-    s: 8,
-    xm: 12,
-    m: 16,
-    b: 18,
-    xb: 24,
-    xxb: 32,
+    xxs: scaleSizeToDevicePixel(2),
+    xs: scaleSizeToDevicePixel(4),
+    s: scaleSizeToDevicePixel(8),
+    xm: scaleSizeToDevicePixel(12),
+    m: scaleSizeToDevicePixel(16),
+    b: scaleSizeToDevicePixel(18),
+    xb: scaleSizeToDevicePixel(24),
+    xxb: scaleSizeToDevicePixel(32),
     set: (value) => value,
     r: 1000,
-    btn: 48,
+    btn: scaleSizeToDevicePixel(48),
   },
   font: {
     weight: {
@@ -41,13 +57,13 @@ const useConstant = () => ({
       bold: 700,
     },
     size: {
-      xs: 11.5,
-      s: 14,
-      m: 16,
-      b: 18,
-      xb: 22,
-      xxb: 28,
-      xxxb: 32,
+      xs: scaleSizeToDevicePixel(10),
+      s: scaleSizeToDevicePixel(12),
+      m: scaleSizeToDevicePixel(14),
+      b: scaleSizeToDevicePixel(16),
+      xb: scaleSizeToDevicePixel(20),
+      xxb: scaleSizeToDevicePixel(24),
+      xxxb: scaleSizeToDevicePixel(32),
     },
   },
 });

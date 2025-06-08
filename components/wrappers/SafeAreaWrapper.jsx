@@ -41,7 +41,6 @@ const AppStatusBar = ({}) => {
         options={{
           headerShown: false,
           navigationBarHidden: false,
-          navigationBarColor: "transparent",
           animation: "none",
         }}
       />

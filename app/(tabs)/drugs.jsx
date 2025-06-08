@@ -3,6 +3,7 @@ import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
+import * as Progress from "react-native-progress";
 import {
   ActivityIndicator,
   StyleSheet,
@@ -18,14 +19,9 @@ import {
 } from "../../components/reuseables";
 import { FormComponent } from "../../components/ui";
 import { ScrollViewWrapper } from "../../components/wrappers";
-import {
-  useAlert,
-  useColor,
-  useConstant,
-  useDebounce,
-  useImageLoader,
-} from "../../hooks";
+import { useAlert, useColor, useConstant, useDebounce } from "../../hooks";
 import Helper__gemini from "../../hooks/helpers/gemini.api";
+import ImageLibrary from "../../lib/image";
 
 export default function DrugsPage() {
   const color = useColor();
@@ -160,7 +156,6 @@ export default function DrugsPage() {
 const SearchByPhotoButton = ({ setForm = () => {}, searchFunc = () => {} }) => {
   const color = useColor();
   const constant = useConstant();
-  const imageLoader = useImageLoader();
   const alert = useAlert();
 
   const styles = StyleSheet.create({
@@ -173,7 +168,7 @@ const SearchByPhotoButton = ({ setForm = () => {}, searchFunc = () => {} }) => {
       right: 0,
     },
     preview: {
-      width: 200,
+      width: 250,
       height: 150,
       borderRadius: constant.size.s,
       backgroundColor: color.black,
@@ -185,7 +180,7 @@ const SearchByPhotoButton = ({ setForm = () => {}, searchFunc = () => {} }) => {
       height: "100%",
       alignItems: "center",
       justifyContent: "center",
-      gap: constant.size.xs,
+      gap: constant.size.s,
       backgroundColor: "rgba(0, 0, 0, 0.8)",
       position: "absolute",
       top: 0,
@@ -193,9 +188,24 @@ const SearchByPhotoButton = ({ setForm = () => {}, searchFunc = () => {} }) => {
       zIndex: 3,
     },
     overlayText: {
-      fontSize: constant.font.size.s,
+      fontSize: constant.font.size.m,
       fontWeight: constant.font.weight.regular,
       color: color.primary,
+    },
+    progress: {
+      width: 200,
+    },
+    removeButton: {
+      width: 24,
+      height: 24,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: constant.size.xs,
+      backgroundColor: color.white,
+      position: "absolute",
+      top: constant.size.s,
+      right: constant.size.s,
+      zIndex: 5,
     },
     button: {
       width: 160,
@@ -268,26 +278,51 @@ const SearchByPhotoButton = ({ setForm = () => {}, searchFunc = () => {} }) => {
     setPhotoUri(""); //clear preview display
   });
 
+  //--
+  const _removeImage = useDebounce(() => {
+    setPhotoUri("");
+  });
+
   return (
     <View style={styles.component}>
       {/**display selected photo preview */}
       {photoUri && (
         <View style={styles.preview}>
           <ImageView
-            uri={imageLoader.picker_thumbnail(photoUri)}
+            uri={ImageLibrary.load_picker_thumbnail(photoUri)}
             scale={true}
           />
 
-          {/**overlay */}
-          {isProcessing && (
+          {/**processin overlay && remove image button */}
+          {isProcessing ? (
             <View style={styles.overlay}>
-              <Feather
-                name="cloud"
-                size={constant.size.b}
-                color={color.primary}
-              />
-              <Text style={styles.overlayText}>Processing Image</Text>
+              <Text style={styles.overlayText}>Processing Image...</Text>
+              <View style={styles.progress}>
+                <Progress.Bar
+                  progress={0.3}
+                  indeterminate={true}
+                  indeterminateAnimationDuration={1000}
+                  width={null}
+                  height={4}
+                  color={color.primary}
+                  unfilledColor={color.primaryFaded}
+                  borderWidth={0}
+                  borderRadius={constant.size.b}
+                />
+              </View>
             </View>
+          ) : (
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.removeButton}
+              onPress={_removeImage}
+            >
+              <Octicons
+                name="trash"
+                size={constant.size.m}
+                color={color.error}
+              />
+            </TouchableOpacity>
           )}
         </View>
       )}

@@ -18,7 +18,7 @@ const PopupModalWrapper = ({ children, onCloseFunc = () => {}, ...props }) => {
   const styles = StyleSheet.create({
     modalInset: {
       width: "100%",
-      minHeight: constant.dimension.height.ratio(1 / 3),
+      minHeight: constant.dimension.height.ratio(1 / 2),
       maxHeight:
         Platform.OS === "ios"
           ? constant.dimension.height.ratio(1 / 1.5)

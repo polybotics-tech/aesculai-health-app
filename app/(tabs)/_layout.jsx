@@ -40,6 +40,7 @@ export default function TabsLayout() {
       borderTopWidth: 0.8,
       borderColor: color.gray50,
       paddingTop: 4,
+      paddingBottom: 0,
       elevation: 0,
     },
     scene: {

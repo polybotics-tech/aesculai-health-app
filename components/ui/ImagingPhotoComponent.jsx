@@ -190,7 +190,7 @@ const PreviewComponent = ({
       {/**analyzing overlay */}
       {isLoading && (
         <View style={styles.overlay}>
-          <Text style={styles.analyzing}>Analyzation in progress...</Text>
+          <Text style={styles.analyzing}>Analysis in progress...</Text>
           <View style={styles.progress}>
             <Progress.Bar
               progress={0.3}

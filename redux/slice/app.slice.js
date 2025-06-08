@@ -60,7 +60,7 @@ const appSlice = createSlice({
 
       state.user = user;
     },
-    _Action_clearSession: (state) => {
+    _Action_clearSession: (state, action) => {
       state.session = {};
       state.user = {};
       state.lastSignedIn = Date.now();

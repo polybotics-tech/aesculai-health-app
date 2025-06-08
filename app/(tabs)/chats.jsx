@@ -317,14 +317,14 @@ const MessageComponent = ({ message }) => {
 
   const styles = StyleSheet.create({
     component: {
-      maxWidth: constant.dimension.width.ratio(1 / 1.45),
+      maxWidth: user ? constant.dimension.width.ratio(1 / 1.45) : "100%",
       paddingHorizontal: constant.size.m,
       paddingVertical: constant.size.s,
       borderRadius: constant.size.s,
       backgroundColor: user ? color.primary : color.gray50,
     },
     text: {
-      fontSize: constant.font.size.m,
+      fontSize: constant.font.size.s,
       fontWeight: constant.font.weight.regular,
       color: user ? color.white : color.gray200,
     },

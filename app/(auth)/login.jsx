@@ -5,6 +5,7 @@ import { PrimaryButton } from "../../components/reuseables";
 import { FormComponent } from "../../components/ui";
 import { useColor, useConstant, useDebounce } from "../../hooks";
 import Helper__supabase from "../../hooks/helpers/supabase.api";
+import { router } from "expo-router";
 
 export default function AuthLogin() {
   const color = useColor();
@@ -27,7 +28,13 @@ export default function AuthLogin() {
   const [isLoading, setIsLoading] = useState(false);
 
   const _attemptLogin = useDebounce(async () => {
-    await Helper__supabase.loginUser(setIsLoading, form);
+    const res = await Helper__supabase.loginUser(setIsLoading, form);
+
+    if (res) {
+      setTimeout(() => {
+        router.dismissTo("/(tabs)/");
+      }, 2000);
+    }
   });
 
   return (
