@@ -3,9 +3,11 @@ import { router } from "expo-router";
 import { useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as Progress from "react-native-progress";
+import * as Application from "expo-application";
 import { useSelector } from "react-redux";
 import { SafeAreaWrapper } from "../components/wrappers";
 import { useColor, useConstant, useDebounce } from "../hooks";
+import ImageLibrary from "../lib/image";
 
 export default function Index() {
   const color = useColor();
@@ -68,6 +70,7 @@ export default function Index() {
   //--
   const session = useSelector((state) => state.app.session);
   const checkRef = useRef(null);
+  const currentAppVersion = Application.nativeApplicationVersion;
 
   //--
   const _checkLoadStatus = useDebounce(async () => {
@@ -76,7 +79,7 @@ export default function Index() {
       router.dismissTo("/(tabs)/");
     } else {
       //if no session, navigate to onboarding
-      router.dismissTo("/onboarding");
+      router.dismissTo("/onboarding/");
     }
   });
 
@@ -103,10 +106,7 @@ export default function Index() {
 
         <View style={styles.center}>
           <View style={styles.holder}>
-            <Image
-              source={require("../assets/images/icon.png")}
-              style={styles.image}
-            />
+            <Image source={ImageLibrary.load_app_logo()} style={styles.image} />
           </View>
 
           <View style={styles.progress}>
@@ -130,7 +130,7 @@ export default function Index() {
 
         {/**about */}
         <View style={styles.about}>
-          <Text style={styles.from}>version 1.0.0</Text>
+          <Text style={styles.from}>version {currentAppVersion}</Text>
         </View>
       </View>
     </SafeAreaWrapper>

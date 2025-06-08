@@ -1,15 +1,21 @@
 import { Octicons } from "@expo/vector-icons";
-import { Image } from "expo-image";
+//import { Image } from "expo-image";
 import { memo } from "react";
+import { Image as RNImage } from "react-native";
 import { StyleSheet, View } from "react-native";
 import { useColor } from "../../hooks";
 
-const ImageView = ({
-  uri,
-  blur = "L6PZfSi_.AyE_3t7t7R**0o#DgR4",
-  scale,
-  iconName = "image",
-}) => {
+let ExpoImage = null;
+try {
+  // Dynamically require expo-image
+  ExpoImage = require("expo-image").Image;
+} catch (error) {
+  console.log(
+    "expo-image not available. Falling back to react-native Image. This usually happens when using Expo Go."
+  );
+}
+
+const ImageView = ({ uri, blur = "", scale, iconName = "image" }) => {
   const color = useColor();
   const blurhash = blur;
 
@@ -30,13 +36,23 @@ const ImageView = ({
   return (
     <>
       {uri ? (
-        <Image
-          source={uri}
-          style={styles.image}
-          placeholder={{ blurhash }}
-          contentFit={Boolean(scale) ? "contain" : "cover"}
-          transition={1000}
-        />
+        <>
+          {Boolean(ExpoImage) ? (
+            <ExpoImage
+              source={uri}
+              style={styles.image}
+              placeholder={{ blurhash }}
+              contentFit={Boolean(scale) ? "contain" : "cover"}
+              transition={1000}
+            />
+          ) : (
+            <RNImage
+              source={uri}
+              style={styles.image}
+              resizeMode={Boolean(scale) ? "contain" : "cover"}
+            />
+          )}
+        </>
       ) : (
         <View style={styles.empty}>
           <Octicons name={iconName} size={18} color={color.gray100} />

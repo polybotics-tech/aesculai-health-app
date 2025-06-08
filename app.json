@@ -2,7 +2,7 @@
   "expo": {
     "name": "Aesculai Health",
     "slug": "aesculai-health-app",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/google-app-icon.png",
     "scheme": "com.aesculai",
@@ -42,12 +42,6 @@
     "plugins": [
       "expo-router",
       [
-        "@react-native-google-signin/google-signin",
-        {
-          "iosUrlScheme": "com.googleusercontent.apps.1098437746889-2bdl76f5na8dqh5epvmbnkfi3aettc91"
-        }
-      ],
-      [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
@@ -63,7 +57,8 @@
           "cameraPermission": "The app wants to access your camera to allow upload profile photo"
         }
       ],
-      "expo-asset"
+      "expo-asset",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

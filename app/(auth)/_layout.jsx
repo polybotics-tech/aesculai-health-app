@@ -1,4 +1,6 @@
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+import { makeRedirectUri } from "expo-auth-session";
 import { router, Slot, usePathname } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -13,11 +15,13 @@ import {
   useImageLoader,
 } from "../../hooks";
 import Helper__supabase from "../../hooks/helpers/supabase.api";
+import ImageLibrary from "../../lib/image";
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function AuthLayout() {
   const color = useColor();
   const constant = useConstant();
-  const imageLoader = useImageLoader();
 
   const styles = StyleSheet.create({
     page: {
@@ -86,6 +90,15 @@ export default function AuthLayout() {
     },
   });
 
+  //--warm up browser for faster popup authentication with google
+  useEffect(() => {
+    WebBrowser.warmUpAsync();
+
+    return () => {
+      WebBrowser.coolDownAsync();
+    };
+  }, []);
+
   //--
   const session = useSelector((state) => state.app.session);
   const user = useSelector((state) => state.app.user);
@@ -140,7 +153,7 @@ export default function AuthLayout() {
 
         {/**logo */}
         <View style={styles.logoHolder}>
-          <ImageView uri={imageLoader.logo()} blur={""} />
+          <ImageView uri={ImageLibrary.load_app_logo()} blur={""} />
         </View>
       </View>
 
@@ -182,91 +195,51 @@ export default function AuthLayout() {
 }
 
 const SignInWithGoogle = ({}) => {
-  const color = useColor();
-  const constant = useConstant();
   const alert = useAlert();
 
-  const styles = StyleSheet.create({
-    googleBtn: {
-      width: "100%",
-      height: constant.size.btn,
-      alignItems: "center",
-      justifyContent: "center",
-      flexDirection: "row",
-      gap: constant.size.xs,
-      borderRadius: constant.size.s,
-      backgroundColor: color.primaryFaded,
-      borderWidth: 1,
-      borderColor: color.primary,
-    },
-    googleText: {
-      fontSize: constant.font.size.s,
-      fontWeight: constant.font.weight.semibold,
-      color: color.primary,
-    },
-  });
-
-  //--
-  const configureGoogleSignIn = () => {
-    GoogleSignin.configure({
-      webClientId:
-        "1098437746889-odhgbcs267tdkmekfush312eti0piqer.apps.googleusercontent.com",
-      iosClientId:
-        "1098437746889-2bdl76f5na8dqh5epvmbnkfi3aettc91.apps.googleusercontent.com",
-      offlineAccess: true,
-      forceCodeForRefreshToken: true,
-      profileImageSize: 1280,
-    });
-  };
-
-  useEffect(() => {
-    configureGoogleSignIn();
-  }, []);
-
-  const [isLoading, setIsLoading] = useState(false);
+  const redirectUri = makeRedirectUri();
 
   //--handle supabase auth
   const _submitTokenToSupabase = async (token) => {
     await Helper__supabase.googleAuth(setIsLoading, token);
   };
 
-  //check if google auth is availabke for device
-  const _googleAuthIsAvailable = async () => {
-    const check = await GoogleSignin.hasPlayServices();
+  //--
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId:
+      "1098437746889-odhgbcs267tdkmekfush312eti0piqer.apps.googleusercontent.com", // Web client ID
+    iosClientId:
+      "1098437746889-2bdl76f5na8dqh5epvmbnkfi3aettc91.apps.googleusercontent.com",
+    scopes: ["openid", "profile", "email"],
+  });
 
-    return check;
-  };
+  useEffect(() => {
+    if (response?.type === "success") {
+      const idToken = response?.authentication?.idToken;
+      if (!idToken) {
+        alert("No ID token received from Google. Please try again").error();
+        return;
+      }
+      _submitTokenToSupabase(idToken);
+    } else if (response?.type === "error") {
+      alert("Google authentication failed").error();
+    }
+  }, [response]);
 
+  const [isLoading, setIsLoading] = useState(false);
   const _signInWithGoogle = useDebounce(async () => {
     try {
       setIsLoading(true);
 
       //check availability
-      const canProceed = await _googleAuthIsAvailable();
-
-      if (!canProceed) {
-        alert("Google authentication is not available on this device").error();
-        return;
-      }
-
-      const googleInfo = await GoogleSignin.signIn();
-
-      if (googleInfo) {
-        if (googleInfo?.type === "cancelled") {
-          alert(
-            "Google authentication failed. Request was interupted or canceled"
-          ).error();
-          return;
-        }
-
-        //continue to supabase
-        await _submitTokenToSupabase(googleInfo?.idToken);
-      } else {
+      if (!request) {
         alert(
-          "Google authentication failed. Check internet connection"
+          "Google authentication is not ready/available on this device"
         ).error();
         return;
       }
+
+      await promptAsync({ redirectUri }); //call google auth
     } catch (error) {
       alert(
         `Google authentication failed. ${

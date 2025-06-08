@@ -16,16 +16,11 @@ import {
   CautionComponent,
   ImageView,
 } from "../../components/reuseables";
-import {
-  useAlert,
-  useColor,
-  useConstant,
-  useDebounce,
-  useImageLoader,
-} from "../../hooks";
+import { useAlert, useColor, useConstant, useDebounce } from "../../hooks";
 import Helper__gemini from "../../hooks/helpers/gemini.api";
 import StringLibrary from "../../lib/string";
 import { _Action_addMessage } from "../../redux/slice/chat.slice";
+import ImageLibrary from "../../lib/image";
 
 export default function ChatsPage() {
   const constant = useConstant();
@@ -262,7 +257,6 @@ const ChatInputComponent = ({}) => {
 const NoMessageComponent = ({}) => {
   const color = useColor();
   const constant = useConstant();
-  const imageLoader = useImageLoader();
 
   const styles = StyleSheet.create({
     component: {
@@ -302,7 +296,7 @@ const NoMessageComponent = ({}) => {
     <View style={styles.component}>
       {/**ai chat logo */}
       <View style={styles.logo}>
-        <ImageView uri={imageLoader.logo()} blur="" />
+        <ImageView uri={ImageLibrary.load_app_logo()} blur="" />
       </View>
 
       <View style={styles.details}>

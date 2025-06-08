@@ -9,10 +9,10 @@ import {
   useColor,
   useConstant,
   useDebounce,
-  useImageLoader,
   useKeyboardHeight,
 } from "../../hooks";
 import StringLibrary from "../../lib/string";
+import ImageLibrary from "../../lib/image";
 
 export default function TabsLayout() {
   const color = useColor();
@@ -138,7 +138,6 @@ export default function TabsLayout() {
 const TabsHeaderComponent = ({ props, activePage }) => {
   const color = useColor();
   const constant = useConstant();
-  const imageLoader = useImageLoader();
 
   const styles = StyleSheet.create({
     titleComponent: {
@@ -252,7 +251,7 @@ const TabsHeaderComponent = ({ props, activePage }) => {
           <View style={styles.top}>
             {/**logo */}
             <View style={styles.logo}>
-              <ImageView uri={imageLoader.logo()} blur="" />
+              <ImageView uri={ImageLibrary.load_app_logo()} blur="" />
             </View>
 
             <Text style={styles.appname}>
@@ -275,7 +274,7 @@ const TabsHeaderComponent = ({ props, activePage }) => {
               onPress={_goToProfile}
             >
               <ImageView
-                uri={imageLoader.thumbnail(user?.avatar_url)}
+                uri={ImageLibrary.load_thumbnail(user?.avatar_url)}
                 blur=""
               />
             </TouchableOpacity>
