@@ -71,13 +71,20 @@ Users sign up using their **email address and password**. Authentication is mana
 
 ## 📱 Running the App
 
+### Install packages & dependencies (also for **SDK 53** compatibility)
+
+```bash
+npm install
+npx expo install
+```
+
 ### Run via **Expo Go** (for easy preview)
 
 ```bash
 npx expo start
 ```
 
-### Run via **EAS Build**
+### Run via **EAS Build** (build app to test on your mobile device)
 
 ```bash
 eas build --profile development
