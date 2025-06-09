@@ -181,7 +181,7 @@ export default function AuthLayout() {
             </Text>
 
             {/** remove comment to make google sign in visible
-             
+
             {/**seperator /}
             <View style={styles.seperator}>
               <Text style={styles.seperatorText}>OR</Text>
@@ -203,7 +203,9 @@ export default function AuthLayout() {
 const SignInWithGoogle = ({}) => {
   const alert = useAlert();
 
-  const redirectUri = makeRedirectUri();
+  //const redirectUri = makeRedirectUri();
+  const redirectUri =
+    "https://beccgvnzkynvedceyolx.supabase.co/auth/v1/callback";
 
   //--handle supabase auth
   const _submitTokenToSupabase = async (token) => {
