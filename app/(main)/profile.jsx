@@ -457,18 +457,26 @@ const SwitchThemeComponent = ({
       setIsVisible={setIsVisible}
     >
       {/**light mode */}
-      <View style={styles.mode}>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        style={styles.mode}
+        onPress={() => _switchTheme("light")}
+      >
         <Text style={styles.title}>Light Mode</Text>
 
         <CheckBox value="light" />
-      </View>
+      </TouchableOpacity>
 
       {/**dark mode */}
-      <View style={styles.mode}>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        style={styles.mode}
+        onPress={() => _switchTheme("dark")}
+      >
         <Text style={styles.title}>Dark Mode</Text>
 
         <CheckBox value="dark" />
-      </View>
+      </TouchableOpacity>
     </PopupModalWrapper>
   );
 };

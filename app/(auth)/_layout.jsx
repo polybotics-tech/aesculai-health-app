@@ -1,5 +1,5 @@
 import * as WebBrowser from "expo-web-browser";
-import * as Google from "expo-auth-session/providers/google";
+//import * as Google from "expo-auth-session/providers/google";
 import { makeRedirectUri } from "expo-auth-session";
 import { router, Slot, usePathname } from "expo-router";
 import { useEffect, useState } from "react";
@@ -198,8 +198,7 @@ export default function AuthLayout() {
 }
 
 {
-  /**not visible to user, but can be added back later */
-}
+  /**not visible to user, but can be added back later 
 const SignInWithGoogle = ({}) => {
   const alert = useAlert();
 
@@ -268,3 +267,6 @@ const SignInWithGoogle = ({}) => {
     />
   );
 };
+
+*/
+}

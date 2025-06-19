@@ -239,13 +239,15 @@ const ChatInputComponent = ({}) => {
                 />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity style={styles.button}>
+              <>
+                {/* <TouchableOpacity style={styles.button}>
                 <Feather
                   name="mic"
                   size={constant.size.m}
                   color={color.gray200}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+              </>
             )}
           </>
         )}
