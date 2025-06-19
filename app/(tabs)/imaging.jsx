@@ -119,7 +119,11 @@ export default function ImagingPage() {
               color={color.gray100}
             />
           }
-          disabled={Boolean(analysis)}
+          disabled={Boolean(
+            isLoading ||
+              analysis?.descriptive_analysis ||
+              analysis?.analysis_details
+          )}
           options={HealthLibrary.imaging_modalities}
         />
 
@@ -137,7 +141,11 @@ export default function ImagingPage() {
               color={color.gray100}
             />
           }
-          disabled={Boolean(analysis)}
+          disabled={Boolean(
+            isLoading ||
+              analysis?.descriptive_analysis ||
+              analysis?.analysis_details
+          )}
           options={HealthLibrary.imaging_body_regions}
         />
       </View>
@@ -157,7 +165,18 @@ export default function ImagingPage() {
           <Text style={styles.sectionTitle}>Analysis Results</Text>
 
           {Boolean(analysis?.error) ? (
-            <NotFoundComponent isLoading={false} text={analysis?.error} />
+            <View style={styles.sectionList}>
+              <NotFoundComponent isLoading={false} text={analysis?.error} />
+
+              {/**action buttons */}
+              <>
+                <PrimaryButton
+                  title="Reset Parameters"
+                  type={"secondary"}
+                  onPress={_resetAnalysis}
+                />
+              </>
+            </View>
           ) : (
             <View style={styles.sectionList}>
               {/**descriptive analysis */}

@@ -135,7 +135,7 @@ const SessionManager = ({}) => {
       const id = session?.user?.id;
       _updateUserData(id);
     } else {
-      dispatch(_Action_updateUser({ user: {} }));
+      dispatch(_Action_clearSession());
     }
   }, [session, _updateUserData]);
 
@@ -164,7 +164,7 @@ const CacheManager = ({}) => {
   const _manageCachedSession = () => {
     if (!app?.session) return;
 
-    const { lastSignedIn, maxCacheLimit } = chat;
+    const { lastSignedIn, maxCacheLimit } = app;
 
     if (!lastSignedIn) return;
 
