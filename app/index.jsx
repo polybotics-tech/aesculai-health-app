@@ -90,7 +90,7 @@ export default function Index() {
 
     checkRef.current = setTimeout(() => {
       _checkLoadStatus();
-    }, 7000);
+    }, 5000);
 
     return () => {
       if (checkRef.current) {

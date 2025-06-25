@@ -7,13 +7,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { ImageView, PrimaryButton } from "../../components/reuseables";
 import { SafeAreaWrapper, ScrollViewWrapper } from "../../components/wrappers";
-import {
-  useAlert,
-  useColor,
-  useConstant,
-  useDebounce,
-  useImageLoader,
-} from "../../hooks";
+import { useAlert, useColor, useConstant, useDebounce } from "../../hooks";
 import Helper__supabase from "../../hooks/helpers/supabase.api";
 import ImageLibrary from "../../lib/image";
 
