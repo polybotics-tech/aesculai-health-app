@@ -90,11 +90,11 @@ export default function Index() {
 
     checkRef.current = setTimeout(() => {
       _checkLoadStatus();
-    }, 5000);
+    }, 3000);
 
     return () => {
       if (checkRef.current) {
-        clearInterval(checkRef.current);
+        clearTimeout(checkRef.current);
       }
     };
   }, [session]);

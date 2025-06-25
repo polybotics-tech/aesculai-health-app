@@ -121,11 +121,16 @@ const PrivacyPolicy = ({ value = false, setValue = () => {} }) => {
   });
 
   //--
-  const [isVisible, setIsVisible] = useState(false);
+  const [privacyIsVisible, setPrivacyIsVisible] = useState(false);
+  const [termsIsVisible, setTermsIsVisible] = useState(false);
 
   const privacyPolicy = HealthLibrary.weird_policy_text;
+  const formattedPrivacyLines =
+    StringLibrary.format_app_terms_and_privacy_policy(privacyPolicy);
 
-  const formattedLines = StringLibrary.format_app_privacy_policy(privacyPolicy);
+  const termsOfUse = HealthLibrary.weird_terms_use_text;
+  const formattedTermsLines =
+    StringLibrary.format_app_terms_and_privacy_policy(termsOfUse);
 
   return (
     <>
@@ -135,11 +140,15 @@ const PrivacyPolicy = ({ value = false, setValue = () => {} }) => {
         setValue={setValue}
         label={
           <Text>
-            I have read, and agree to the{" "}
+            I have read, and agree to Aesculai{" "}
+            <Text style={styles.link} onPress={() => setTermsIsVisible(true)}>
+              Terms of Use
+            </Text>{" "}
+            and{" "}
             <Text
               style={styles.link}
               onPress={() => {
-                setIsVisible(true);
+                setPrivacyIsVisible(true);
               }}
             >
               Privacy Policy
@@ -149,13 +158,22 @@ const PrivacyPolicy = ({ value = false, setValue = () => {} }) => {
         }
       />
 
+      {/**terms popup */}
+      <PopupModalWrapper
+        title={"Terms of Use"}
+        isVisible={termsIsVisible}
+        setIsVisible={setTermsIsVisible}
+      >
+        <PolicyTextFormatComponent formattedLines={formattedTermsLines} />
+      </PopupModalWrapper>
+
       {/**privacy popup */}
       <PopupModalWrapper
         title={"Privacy Policy"}
-        isVisible={isVisible}
-        setIsVisible={setIsVisible}
+        isVisible={privacyIsVisible}
+        setIsVisible={setPrivacyIsVisible}
       >
-        <PolicyTextFormatComponent formattedLines={formattedLines} />
+        <PolicyTextFormatComponent formattedLines={formattedPrivacyLines} />
       </PopupModalWrapper>
     </>
   );

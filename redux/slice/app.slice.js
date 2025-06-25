@@ -60,8 +60,10 @@ const appSlice = createSlice({
 
       state.user = user;
     },
-    _Action_clearSession: (state, action) => {
-      state.session = {};
+    _Action_clearSession: (state) => {
+      if (state.session || state.session?.user) {
+        state.session = {};
+      }
       state.user = {};
       state.lastSignedIn = Date.now();
     },

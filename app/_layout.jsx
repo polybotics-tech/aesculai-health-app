@@ -116,28 +116,31 @@ const SessionManager = ({}) => {
     SupabaseLibrary.supabase.auth.getSession().then(({ data: { session } }) => {
       dispatch(_Action_updateSession({ session })); //update session globally
     });
+
     const { data: listener } = SupabaseLibrary.supabase.auth.onAuthStateChange(
       (_event, session) => {
         dispatch(_Action_updateSession({ session })); //update session globally
       }
     );
 
-    return () => listener?.subscription.unsubscribe();
+    return () => {
+      listener?.subscription.unsubscribe();
+    };
   }, []);
 
   //--update global user state on session change
-  const _updateUserData = async (id) => {
-    await Helper__supabase.fetchUserData(id); //refetch user data
-  };
-
-  useEffect(() => {
+  const _updateUserData = async () => {
     if (session && session?.user) {
       const id = session?.user?.id;
-      _updateUserData(id);
+      await Helper__supabase.fetchUserData(id); //refetch user data
     } else {
       dispatch(_Action_clearSession());
     }
-  }, [session, _updateUserData]);
+  };
+
+  useEffect(() => {
+    _updateUserData();
+  }, [session]);
 
   return <></>;
 };
