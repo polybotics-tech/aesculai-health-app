@@ -133,8 +133,6 @@ const SessionManager = ({}) => {
     if (session && session?.user) {
       const id = session?.user?.id;
       await Helper__supabase.fetchUserData(id); //refetch user data
-    } else {
-      dispatch(_Action_clearSession());
     }
   };
 
