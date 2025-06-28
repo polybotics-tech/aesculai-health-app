@@ -2,7 +2,7 @@
   "expo": {
     "name": "Aesculai Health",
     "slug": "aesculai-health-app",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/images/google-app-icon.png",
     "scheme": "com.aesculai",

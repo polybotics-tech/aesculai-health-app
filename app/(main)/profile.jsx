@@ -3,7 +3,10 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { PrimaryButton } from "../../components/reuseables";
+import {
+  PolicyTextFormatComponent,
+  PrimaryButton,
+} from "../../components/reuseables";
 import {
   FormComponent,
   ProfilePhotoComponent,
@@ -16,6 +19,8 @@ import {
 import { useColor, useConstant, useDebounce } from "../../hooks";
 import Helper__supabase from "../../hooks/helpers/supabase.api";
 import { _Action_toggleTheme } from "../../redux/slice/app.slice";
+import StringLibrary from "../../lib/string";
+import HealthLibrary from "../../lib/health";
 
 export default function ProfilePage() {
   const color = useColor();
@@ -73,6 +78,8 @@ export default function ProfilePage() {
   const [roleModalVisible, setRoleModalVisible] = useState(false);
   const [switchModalVisible, setSwitchModalVisible] = useState(false);
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+  const [privacyModalVisible, setPrivacyModalVisible] = useState(false);
+  const [termsModalVisible, setTermsModalVisible] = useState(false);
 
   //--
   return (
@@ -113,7 +120,18 @@ export default function ProfilePage() {
             onPress={() => setSwitchModalVisible(true)}
           />
 
-          {/**contact option & terms and condition should be added here */}
+          {/**contact option & terms and privacy policy should be added here */}
+          <OptionTab
+            icon="file"
+            title="Privacy Policies"
+            onPress={() => setPrivacyModalVisible(true)}
+          />
+
+          <OptionTab
+            icon="file"
+            title="Terms of Use"
+            onPress={() => setTermsModalVisible(true)}
+          />
 
           <OptionTab
             icon="sign-out"
@@ -140,6 +158,14 @@ export default function ProfilePage() {
       <SwitchThemeComponent
         isVisible={switchModalVisible}
         setIsVisible={setSwitchModalVisible}
+      />
+
+      {/**terms and privacy policy */}
+      <TermsPrivacyPolicyComponent
+        privacyIsVisible={privacyModalVisible}
+        setPrivacyIsVisible={setPrivacyModalVisible}
+        termsIsVisible={termsModalVisible}
+        setTermsIsVisible={setTermsModalVisible}
       />
 
       {/**log out */}
@@ -478,6 +504,44 @@ const SwitchThemeComponent = ({
         <CheckBox value="dark" />
       </TouchableOpacity>
     </PopupModalWrapper>
+  );
+};
+
+const TermsPrivacyPolicyComponent = ({
+  privacyIsVisible,
+  setPrivacyIsVisible = () => {},
+  termsIsVisible,
+  setTermsIsVisible = () => {},
+}) => {
+  //--
+  const privacyPolicy = HealthLibrary.weird_policy_text;
+  const formattedPrivacyLines =
+    StringLibrary.format_app_terms_and_privacy_policy(privacyPolicy);
+
+  const termsOfUse = HealthLibrary.weird_terms_use_text;
+  const formattedTermsLines =
+    StringLibrary.format_app_terms_and_privacy_policy(termsOfUse);
+
+  return (
+    <>
+      {/**terms popup */}
+      <PopupModalWrapper
+        title={"Terms of Use"}
+        isVisible={termsIsVisible}
+        setIsVisible={setTermsIsVisible}
+      >
+        <PolicyTextFormatComponent formattedLines={formattedTermsLines} />
+      </PopupModalWrapper>
+
+      {/**privacy popup */}
+      <PopupModalWrapper
+        title={"Privacy Policy"}
+        isVisible={privacyIsVisible}
+        setIsVisible={setPrivacyIsVisible}
+      >
+        <PolicyTextFormatComponent formattedLines={formattedPrivacyLines} />
+      </PopupModalWrapper>
+    </>
   );
 };
 
